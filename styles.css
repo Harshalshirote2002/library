@@ -69,6 +69,23 @@ h3{
     text-align: end;
 }
 
+.card-edit{
+    display: flex;
+    justify-content: end;
+}
+
+img{
+    height: 24px;
+    transition: 0.2s ease-in-out;
+    /* border: 1px solid #334155; */
+}
+
+img:hover{
+    transform: rotate(360deg) scale(1.2);
+    border-radius: 50%;
+    background-color: #fafafa;
+}
+
 .settings{
     display: grid;
     position: sticky;
@@ -76,7 +93,7 @@ h3{
     bottom: 0;
 }
 
-button{
+.settings button{
     place-self: center;
     height: 40px;
     width: 150px;
@@ -90,6 +107,37 @@ button{
 
 button:hover{
     transform: scale(1.05);
+}
+
+dialog{
+    position: fixed;
+    top: calc(50vh - 164px);
+    left: calc(50vw - 317px);
+}
+
+form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2vw 5vw;
+    padding: 32px;
+}
+
+.form-title{
+    grid-column: 1/3;
+}
+
+.form-buttons{
+    grid-column: 1/3;
+    display: grid;
+    grid-template-columns: 70px 70px;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+}
+
+.entry{
+    display: flex;
+    flex-direction: column;
 }
 
 footer{
