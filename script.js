@@ -56,7 +56,19 @@ function readEvent(e){
     updateDisplay(myLibrary);
 }
 
-addBook.addEventListener('click', ()=>{addBookDialog.showModal()});
+function placeDialog(){
+    addBookDialog.showModal()
+    const dialogWidth = addBookDialog.offsetWidth;
+    const dialogHeight = addBookDialog.offsetHeight;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const leftPosition = viewportWidth / 2 - dialogWidth / 2;
+    const topPosition = viewportHeight / 2 - dialogHeight / 2;
+    addBookDialog.style.left = `${leftPosition}px`;
+    addBookDialog.style.top = `${topPosition}px`;
+}
+
+addBook.addEventListener('click', placeDialog);
 cancel.addEventListener('click', closeEvent);
 addForm.addEventListener('submit', submitEvent);
 
