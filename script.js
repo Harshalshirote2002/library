@@ -1,3 +1,4 @@
+let bookCounter = 0;
 const booksContainer = document.querySelector('.books-container');
 const addBook = document.getElementById('add-book');
 const addBookDialog = document.querySelector('.add-book');
@@ -7,58 +8,60 @@ const title = document.getElementById('title');
 const author = document.getElementById('author');
 const pageCount = document.getElementById('page-count');
 const pageCompleted = document.getElementById('page-complete');
-
 const myLibrary = [];
 
 function Book(name, author, pages, read=0){
+    this.id = bookCounter++;
     this.name = name;
     this.author = author;
     this.pages = pages;
     this.read = read;
 }
 
-const listOfBooks = [
-// new Book("The Merchant of Venice", "Shakespeare", 173, 173),
-// new Book("The Da Vinci Code", "Dan Brown", 689, 689),
-// new Book("Ice Station", "Matthew Reilly", 541, 541),
-// new Book("Angels and Demons", "Dan Brown", 768, 768),
-// new Book("The Stranger", "Albert Camus", 103, 103),
-// new Book("Crime and Punishment", "Fyodor Dostoyevsky", 703, 65),
-// new Book("The doomsday conspiracy", "Sidney Sheldon", 448, 448),
-// new Book("Gora", "Rabindranath Tagore", 469, 469)
-];
+function findBookById(library, id){
+    return library.findIndex(book => book.id === parseInt(id));
+}
 
 function addBookToLibrary(book){
     myLibrary.push(book);
 }
 
-for(let book of listOfBooks){
-    addBookToLibrary(book);
-}
-
-
-
-const cards = Array.from(document.querySelectorAll('img'));
-
-function clickEvent(){
-
-}
 
 function submitEvent(e){
     e.preventDefault();
     if(addForm.checkValidity()){
-        console.log(title.value);
         let myBook = new Book(title.value, author.value, pageCount.value, pageCompleted.value);
         addBookToLibrary(myBook);
         updateDisplay(myLibrary)
+        addForm.reset();
         addBookDialog.close()
     }
 }
 
-// cards.forEach((card)=> card.addEventListener('click', clickEvent));
+function closeEvent(e){
+    addForm.reset(); 
+    addBookDialog.close();
+}
+
+
+function deleteEvent(e){
+    const indexToDelete = findBookById(myLibrary,Array.from(e.target.classList)[1] );
+    myLibrary.splice(indexToDelete, 1);
+    updateDisplay(myLibrary);
+}
+
+function readEvent(e){
+    const indexToRead = findBookById(myLibrary,Array.from(e.target.classList)[1] );
+    myLibrary[indexToRead].read= myLibrary[indexToRead].pages;
+    updateDisplay(myLibrary);
+}
+
 addBook.addEventListener('click', ()=>{addBookDialog.showModal()});
-cancel.addEventListener('click', ()=>{addBookDialog.close()});
+cancel.addEventListener('click', closeEvent);
 addForm.addEventListener('submit', submitEvent);
+
+let editDelete=0;
+let editRead=0;
 
 function updateDisplay(myLibrary){
     booksContainer.textContent='';
@@ -68,9 +71,16 @@ function updateDisplay(myLibrary){
         const author = document.createElement('p');
         const read = document.createElement('p');
         const edit = document.createElement('p');
-        const editButton = document.createElement('img');
-        editButton.src='./images/edit.svg'
-        edit.appendChild(editButton);
+        const deleteButton = document.createElement('img');
+        const readButton = document.createElement('img');
+        deleteButton.src='./images/delete.svg';
+        deleteButton.classList.add('edit-delete');
+        readButton.classList.add('edit-read');
+        readButton.classList.add(book.id);
+        deleteButton.classList.add(book.id);
+        readButton.src='./images/done.svg';
+        edit.appendChild(deleteButton);
+        edit.appendChild(readButton);
         edit.classList.add('card-edit');
         name.textContent = book.name;
         name.classList.add('title');
@@ -90,4 +100,10 @@ function updateDisplay(myLibrary){
         card.classList.add('book');
         booksContainer.appendChild(card);
     }
+    editDelete = Array.from(document.querySelectorAll('.edit-delete'));
+    editRead = Array.from(document.querySelectorAll('.edit-read'));
+    editDelete.forEach((edit) => {edit.addEventListener('click', deleteEvent)});
+    editRead.forEach((edit) => {edit.addEventListener('click', readEvent)});
 }
+
+
