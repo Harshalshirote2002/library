@@ -10,12 +10,18 @@ const pageCount = document.getElementById('page-count');
 const pageCompleted = document.getElementById('page-complete');
 const myLibrary = [];
 
-function Book(name, author, pages, read=0){
-    this.id = bookCounter++;
-    this.name = name;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book{
+    constructor(name, author, pages, read=0){
+        this.id = bookCounter++;
+        this.name = name;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+
+    getPercentageRead(){
+        return Math.round(this.read*100/this.pages);
+    }
 }
 
 function findBookById(library, id){
@@ -100,7 +106,7 @@ function updateDisplay(myLibrary){
         author.classList.add('author');
         read.classList.add('read');
         author.textContent = book.author;
-        if((book.read/book.pages)==1){
+        if(book.getPercentageRead()>=100){
             read.textContent = 'Finished';
         }else{
             read.textContent = `${Math.round(book.read*100/book.pages)}% Finished`;
