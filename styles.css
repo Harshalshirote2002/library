@@ -99,7 +99,7 @@ img:hover{
     height: 40px;
     width: 150px;
     border-radius: 50px;
-    background-color: #020617;
+    background-color: #52525b; 
     color: #f8fafc;
     font-weight: 700;
     font-size: 24px;
@@ -107,14 +107,11 @@ img:hover{
 }
 
 button:hover{
-    transform: scale(1.05);
+    cursor: pointer;
+    background-color: #111827;
+    color: #f8fafc;
+    transform: scale(1.015);
 }
-
-/* dialog{
-    position: fixed;
-    top: calc(50vh - 164px);
-    left: calc(50vw - 317px);
-} */
 
 form{
     display: grid;
