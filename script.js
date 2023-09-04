@@ -9,6 +9,7 @@ const author = document.getElementById('author');
 const pageCount = document.getElementById('page-count');
 const pageCompleted = document.getElementById('page-complete');
 const titleError = document.getElementById('title-error');
+const authorError = document.getElementById('author-error');
 const myLibrary = [];
 
 class Book{
@@ -125,7 +126,7 @@ function updateDisplay(myLibrary){
     editRead.forEach((edit) => {edit.addEventListener('click', readEvent)});
 }
 
-function showError(){
+function showTitleError(){
     if(title.validity.valueMissing){
         titleError.textContent="Please Enter a title!";
     }else if(title.validity.tooShort){
@@ -139,7 +140,25 @@ title.addEventListener('input', (event)=>{
         title.classList.remove('input-invalid');
         titleError.textContent='';
     }else{
-        showError();
+        showTitleError();
+    }
+});
+
+function showAuthorError(){
+    if(author.validity.valueMissing){
+        authorError.textContent="Please Enter a name!";
+    }else if(author.validity.tooShort){
+        authorError.textContent=`name should at least be ${author.minLength} characters long.`;
+    }
+    author.classList.add('input-invalid');
+}
+
+author.addEventListener('input', (event)=>{
+    if(author.validity.valid){
+        author.classList.remove('input-invalid');
+        authorError.textContent='';
+    }else{
+        showAuthorError();
     }
 });
 
