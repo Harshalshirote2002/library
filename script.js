@@ -8,6 +8,7 @@ const title = document.getElementById('title');
 const author = document.getElementById('author');
 const pageCount = document.getElementById('page-count');
 const pageCompleted = document.getElementById('page-complete');
+const titleError = document.getElementById('title-error');
 const myLibrary = [];
 
 class Book{
@@ -124,4 +125,21 @@ function updateDisplay(myLibrary){
     editRead.forEach((edit) => {edit.addEventListener('click', readEvent)});
 }
 
+function showError(){
+    if(title.validity.valueMissing){
+        titleError.textContent="Please Enter a title!";
+    }else if(title.validity.tooShort){
+        titleError.textContent=`title should at least be ${title.minLength} characters long.`;
+    }
+    title.classList.add('input-invalid');
+}
+
+title.addEventListener('input', (event)=>{
+    if(title.validity.valid){
+        title.classList.remove('input-invalid');
+        titleError.textContent='';
+    }else{
+        showError();
+    }
+});
 

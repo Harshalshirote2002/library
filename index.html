@@ -16,15 +16,16 @@
         <button id="add-book">Add Book</button>
     </div>
     <dialog class="add-book">
-        <form class="add-book-form">
+        <form class="add-book-form" novalidate>
             <div class="form-title">Please enter the following details: </div>
             <div class="entry">
                 <label for="title">Book Name: </label>
-                <input type="text" id="title" name="title" placeholder="Angels and Demons" maxlength="25" required>
+                <input type="text" id="title" name="title" placeholder="Angels and Demons" minlength="5" maxlength="25" required>
+                <p id="title-error" style="font-size: 15px;"></p>
             </div>
             <div class="entry">
                 <label for="author">Author: </label>
-                <input type="text" id="author" name="author" placeholder="Dan Brown" maxlength="20" required>
+                <input type="text" id="author" name="author" placeholder="Dan Brown" minlength="3" maxlength="20" required>
             </div>
             <div class="entry">
                 <label for="page-count">Total number of pages: </label>
